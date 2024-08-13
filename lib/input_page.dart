@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/calculator_logic.dart';
 import 'package:bmi_calculator/result_page.dart';
 import 'package:bmi_calculator/reusable_card.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _InputPageState extends State<InputPage> {
   int height = 180;
   int weight = 60;
   int age = 19;
+  late CalculatorLogic yourBMI;
 
   @override
   Widget build(BuildContext context) {
@@ -200,10 +202,15 @@ class _InputPageState extends State<InputPage> {
             ])),
             BottomButton(
               onTap: () {
+                yourBMI = CalculatorLogic(height: height, weight: weight);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ResultPage(),
+                    builder: (context) => ResultPage(
+                      bmiResult: yourBMI.calculateBMI(),
+                      resultText: yourBMI.getResult(),
+                      interpretation: yourBMI.getInterpetation(),
+                    ),
                   ),
                 );
               },
